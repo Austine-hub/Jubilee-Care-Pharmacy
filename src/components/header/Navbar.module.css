@@ -1,0 +1,420 @@
+/* ============================================================================ 
+   Modern Accessible Responsive Navbar CSS Module (2025)
+   Harmonized with Framer Motion animations and ARIA-compliant patterns
+   ============================================================================ */
+
+/* ============================================================================ 
+   CSS CUSTOM PROPERTIES
+   ============================================================================ */
+:root {
+  --nav-height: 70px;
+  --nav-bg: #ffffff;
+  --nav-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  --nav-border: rgba(0, 0, 0, 0.06);
+
+  /* Hospital-friendly palette (calming + professional tones) */
+  --primary-color: #007fa3; /* teal hospital tone */
+  --primary-hover: #006985;
+  --accent-color: #e0f7fa;
+
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --text-hover: var(--primary-color);
+
+  --dropdown-bg: #ffffff;
+  --dropdown-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  --dropdown-hover-bg: #f3f4f6;
+
+  --mobile-menu-width: 320px;
+  --overlay-bg: rgba(0, 0, 0, 0.6);
+
+  --transition-speed: 0.3s;
+  --transition-easing: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --focus-ring: 0 0 0 3px rgba(0, 127, 163, 0.25);
+}
+
+/* ============================================================================ 
+   RESET & BASE
+   ============================================================================ */
+.navbarContainer *,
+.navbarContainer *::before,
+.navbarContainer *::after {
+  box-sizing: border-box;
+}
+
+/* ============================================================================ 
+   ACCESSIBILITY: SKIP LINK
+   ============================================================================ */
+.skipLink {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  padding: 1rem 1.5rem;
+  background: var(--primary-color);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  z-index: 10000;
+  border-radius: 0 0 8px 0;
+  transition: top 0.25s ease;
+}
+.skipLink:focus {
+  top: 0;
+  outline: 2px solid #fff;
+}
+
+/* ============================================================================ 
+   NAVBAR CONTAINER
+   ============================================================================ */
+.navbarContainer {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: var(--nav-height);
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--nav-border);
+  box-shadow: var(--nav-shadow);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.navInner {
+  width: 100%;
+  max-width: 1400px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 2rem;
+  position: relative;
+}
+
+/* ============================================================================ 
+   MOBILE TOGGLE BUTTON — UPDATED FOR VISIBILITY
+   ============================================================================ */
+.mobileToggle {
+  display: none;
+  position: absolute;
+  left: 1rem;
+  background: var(--primary-color);
+  border: none;
+  padding: 0.6rem;
+  cursor: pointer;
+  color: #ffffff;
+  border-radius: 8px;
+  transition: all var(--transition-speed) var(--transition-easing);
+  z-index: 1001;
+  box-shadow: 0 2px 6px rgba(0, 127, 163, 0.25);
+}
+.mobileToggle:hover {
+  background: var(--primary-hover);
+  box-shadow: 0 3px 8px rgba(0, 127, 163, 0.3);
+}
+.mobileToggle:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(0, 127, 163, 0.4);
+  background: var(--primary-hover);
+}
+.mobileToggle:active {
+  transform: scale(0.96);
+  background: var(--primary-hover);
+}
+
+/* ============================================================================ 
+   NAVIGATION LIST
+   ============================================================================ */
+.navList {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  list-style: none;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+.navItem {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+/* ============================================================================ 
+   NAV LINKS
+   ============================================================================ */
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all var(--transition-speed) var(--transition-easing);
+  cursor: pointer;
+  background: transparent;
+  position: relative;
+  white-space: nowrap;
+}
+.navLink:hover {
+  color: var(--primary-color);
+  background-color: rgba(0, 127, 163, 0.08);
+}
+.navLink:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+.navLink.activeLink {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+.navLink.activeLink::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 2px;
+  width: 60%;
+  background: var(--primary-color);
+  border-radius: 2px;
+}
+
+/* ============================================================================ 
+   DROPDOWN MENU
+   ============================================================================ */
+.dropdownWrapper {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.dropdownIcon {
+  font-size: 0.75rem;
+  transition: transform var(--transition-speed) var(--transition-easing);
+}
+.iconOpen {
+  transform: rotate(180deg);
+}
+.dropdownMenu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  min-width: 230px;
+  background: var(--dropdown-bg);
+  border-radius: 8px;
+  box-shadow: var(--dropdown-shadow);
+  list-style: none;
+  padding: 0.25rem 0;
+  border: 1px solid var(--nav-border);
+  z-index: 999;
+}
+.dropdownLink {
+  display: block;
+  padding: 0.875rem 1.25rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.25s var(--transition-easing);
+}
+.dropdownLink:hover {
+  background: var(--dropdown-hover-bg);
+  color: var(--primary-color);
+  padding-left: 1.75rem;
+}
+.dropdownLink:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  background-color: var(--dropdown-hover-bg);
+}
+.dropdownLink.activeLink {
+  color: var(--primary-color);
+  font-weight: 600;
+  background-color: rgba(0, 127, 163, 0.1);
+}
+
+/* ============================================================================ 
+   MOBILE MENU
+   ============================================================================ */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--overlay-bg);
+  z-index: 998;
+}
+.mobileMenuWrapper {
+  display: none;
+  z-index: 999;
+}
+
+/* ============================================================================ 
+   RESPONSIVE: TABLET & MOBILE
+   ============================================================================ */
+@media (max-width: 992px) {
+  .navInner {
+    padding: 0 1rem;
+  }
+
+  .mobileToggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .overlay {
+    display: block;
+  }
+
+  .mobileMenuWrapper {
+    display: block;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: var(--mobile-menu-width);
+    max-width: 85vw;
+    background: var(--nav-bg);
+    box-shadow: -4px 0 18px rgba(0, 0, 0, 0.12);
+    overflow-y: auto;
+    z-index: 1000;
+  }
+
+  .navList {
+    flex-direction: column;
+    align-items: stretch;
+    padding-top: calc(var(--nav-height) + 1rem);
+    padding-bottom: 2rem;
+    gap: 0;
+  }
+
+  .navItem {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  .navItem:last-child {
+    border-bottom: none;
+  }
+
+  .navLink {
+    width: 100%;
+    justify-content: space-between;
+    font-size: 1rem;
+    border-radius: 0;
+    padding: 1rem 1.5rem;
+  }
+  .navLink.activeLink::after {
+    display: none;
+  }
+
+  .dropdownWrapper {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .dropdownMenu {
+    position: static;
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+    background: rgba(0, 127, 163, 0.04);
+  }
+
+  .dropdownLink {
+    padding: 0.875rem 1.5rem 0.875rem 2.5rem;
+    font-size: 0.9rem;
+    position: relative;
+  }
+  .dropdownLink::before {
+    content: "›";
+    position: absolute;
+    left: 1.25rem;
+    color: var(--text-secondary);
+    transition: all 0.2s var(--transition-easing);
+  }
+  .dropdownLink:hover {
+    background: rgba(0, 127, 163, 0.08);
+  }
+  .dropdownLink:hover::before {
+    color: var(--primary-color);
+    left: 1.5rem;
+  }
+}
+
+/* ============================================================================ 
+   SMALL MOBILE
+   ============================================================================ */
+@media (max-width: 480px) {
+  :root {
+    --nav-height: 60px;
+    --mobile-menu-width: 280px;
+  }
+
+  .navInner {
+    padding: 0 0.75rem;
+  }
+  .mobileToggle {
+    left: 0.75rem;
+    padding: 0.5rem;
+  }
+  .navLink {
+    padding: 0.875rem 1.25rem;
+  }
+  .dropdownLink {
+    font-size: 0.85rem;
+    padding: 0.75rem 1.25rem 0.75rem 2.25rem;
+  }
+  .dropdownLink::before {
+    left: 1rem;
+  }
+}
+
+/* ============================================================================ 
+   REDUCED MOTION & HIGH CONTRAST
+   ============================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .navLink,
+  .dropdownIcon,
+  .dropdownLink,
+  .mobileToggle {
+    transition: none;
+  }
+  .iconOpen {
+    transform: none;
+  }
+}
+@media (prefers-contrast: high) {
+  .navbarContainer {
+    border-bottom: 2px solid currentColor;
+  }
+  .navLink:focus-visible,
+  .dropdownLink:focus-visible,
+  .mobileToggle:focus-visible {
+    outline: 3px solid currentColor;
+    outline-offset: 2px;
+  }
+}
+
+/* ============================================================================ 
+   DARK MODE
+   ============================================================================ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --nav-bg: #1f2937;
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --nav-border: rgba(255, 255, 255, 0.1);
+    --dropdown-bg: #374151;
+    --dropdown-hover-bg: #4b5563;
+    --nav-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    --primary-color: #00b4d8; /* softer teal for dark mode */
+    --primary-hover: #0096c7;
+  }
+}

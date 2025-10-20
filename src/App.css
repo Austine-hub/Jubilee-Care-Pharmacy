@@ -1,0 +1,203 @@
+/* ============================================================================
+   App.module.css — Scalable Global Layout (2025 Modern Best Practice)
+   ----------------------------------------------------------------------------
+   • Lightweight responsive foundation for hospital / pharmacy UI
+   • Accessible typography, smooth layout scaling, mobile-first design
+   • Works seamlessly with App.tsx structure
+   ============================================================================ */
+
+/* ------------------------------
+   ROOT DESIGN TOKENS
+--------------------------------*/
+:root {
+  --color-primary: #0077b6;      /* Calm hospital blue */
+  --color-accent: #00b4d8;       /* Aqua accent */
+  --color-bg: #f9fafb;           /* Soft neutral background */
+  --color-surface: #ffffff;      /* Card/section surface */
+  --color-text: #222;            /* Default text color */
+  --color-text-muted: #555;      /* Muted text */
+  --color-border: #e5e7eb;       /* Subtle border gray */
+
+  --font-base: "Inter", "Segoe UI", Roboto, sans-serif;
+  --font-size-base: 16px;
+  --radius-lg: 1.25rem;
+  --radius-md: 0.75rem;
+  --radius-sm: 0.5rem;
+
+  --transition-base: all 0.3s ease-in-out;
+  --shadow-soft: 0 2px 10px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 15px rgba(0, 0, 0, 0.08);
+
+  /* Responsive breakpoints */
+  --bp-mobile: 480px;
+  --bp-tablet: 768px;
+  --bp-desktop: 1200px;
+}
+
+/* ------------------------------
+   GLOBAL RESETS & TYPOGRAPHY
+--------------------------------*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 100%; /* 16px default */
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-base);
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Better focus visibility for accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* ------------------------------
+   HEADER (Topbar + Navbar)
+--------------------------------*/
+header {
+  width: 100%;
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+  position: relative;
+  z-index: 1000;
+  transition: var(--transition-base);
+}
+
+@media (max-width: var(--bp-mobile)) {
+  header {
+    box-shadow: none;
+    border-bottom: 1px solid var(--color-border);
+  }
+}
+
+/* ------------------------------
+   MAIN CONTENT AREA
+--------------------------------*/
+main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: var(--color-bg);
+  padding: 0;
+  min-height: 60vh;
+}
+
+/* Section padding for non-homepage content (Outlet routes) */
+main > :not(:first-child) {
+  padding: 2rem 1rem;
+}
+
+@media (min-width: var(--bp-tablet)) {
+  main > :not(:first-child) {
+    padding: 3rem 2rem;
+  }
+}
+
+@media (min-width: var(--bp-desktop)) {
+  main > :not(:first-child) {
+    padding: 4rem 6rem;
+  }
+}
+
+/* ------------------------------
+   FOOTER
+--------------------------------*/
+footer {
+  background-color: var(--color-primary);
+  color: #fff;
+  text-align: center;
+  padding: 2rem 1rem;
+  margin-top: auto;
+  font-size: 0.95rem;
+}
+
+footer a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: var(--transition-base);
+}
+
+footer a:hover,
+footer a:focus {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* ------------------------------
+   UTILITY CLASSES
+--------------------------------*/
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem;
+  max-width: 1200px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.shadow-soft {
+  box-shadow: var(--shadow-soft);
+}
+
+.shadow-md {
+  box-shadow: var(--shadow-md);
+}
+
+.rounded-lg {
+  border-radius: var(--radius-lg);
+}
+
+/* ------------------------------
+   ACCESSIBILITY UTILITIES
+--------------------------------*/
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip: rect(0 0 0 0);
+}
+
+/* ------------------------------
+   DARK MODE SUPPORT (Optional)
+--------------------------------*/
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #0f172a;
+    --color-surface: #1e293b;
+    --color-text: #f8fafc;
+    --color-border: #334155;
+  }
+
+  header,
+  footer {
+    background-color: var(--color-surface);
+  }
+
+  footer {
+    color: var(--color-text);
+  }
+
+  a {
+    color: var(--color-accent);
+  }
+}

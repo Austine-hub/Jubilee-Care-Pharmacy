@@ -1,0 +1,259 @@
+/* GeneralConsultation.module.css
+   Clean, modern styles for the General Consultation section.
+   Mobile-first approach, accessible contrast and clear focus states.
+*/
+
+/* Root variables for easy theming */
+:root {
+  --bg: #ffffff;
+  --card-bg: #ffffff;
+  --muted: #6b7280;
+  --accent: #0066cc;
+  --accent-600: #005bb5;
+  --ring: 0 0 0 4px rgba(0, 102, 204, 0.12);
+  --radius: 12px;
+  --shadow-sm: 0 1px 2px rgba(16,24,40,0.04);
+  --shadow-md: 0 6px 18px rgba(16,24,40,0.06);
+}
+
+/* Section wrapper */
+.wrapper {
+  background: var(--bg);
+  padding: 28px 16px;
+  color: #0f172a;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* Constrain width like top health websites */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header */
+.header {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.title {
+  font-size: 1.5rem;
+  margin: 0;
+  line-height: 1.15;
+}
+
+.lead {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* Grid layout */
+.grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: 1fr;
+}
+
+/* Card */
+.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+  border: 1px solid rgba(15,23,42,0.04);
+}
+
+.card:focus-within,
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Banner image */
+.bannerWrap {
+  width: 100%;
+  height: 120px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f8fafc, #fff);
+}
+
+.banner {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Card body */
+.cardBody {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.specialtyTitle {
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.desc {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+/* Doctors row */
+.doctorRow {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.doctorCard {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 0;
+  width: calc(50% - 6px); /* two per row on small screens inside card */
+}
+
+.doctorPhoto {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid rgba(15,23,42,0.05);
+  flex-shrink: 0;
+}
+
+.doctorMeta {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+}
+
+.doctorName {
+  font-weight: 600;
+  line-height: 1;
+}
+
+.doctorTitle {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+/* Actions */
+.cardActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+  align-items: center;
+}
+
+.cta {
+  display: inline-block;
+  padding: 8px 12px;
+  background: var(--accent);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.92rem;
+  border: none;
+  cursor: pointer;
+  transition: background 120ms ease, transform 120ms ease;
+}
+
+.cta:focus,
+.cta:hover {
+  background: var(--accent-600);
+  outline: none;
+  box-shadow: var(--ring);
+  transform: translateY(-1px);
+}
+
+.detailsBtn {
+  background: transparent;
+  border: 1px solid rgba(15,23,42,0.06);
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.detailsBtn:focus {
+  box-shadow: var(--ring);
+  outline: none;
+}
+
+/* Responsive breakpoints */
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .doctorCard {
+    width: calc(50% - 6px);
+  }
+}
+
+@media (min-width: 980px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .bannerWrap {
+    height: 140px;
+  }
+
+  .doctorPhoto {
+    width: 72px;
+    height: 72px;
+  }
+}
+
+/* High contrast / prefers-color-scheme support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b1220;
+    --card-bg: #071023;
+    --muted: #9aa4b2;
+    --accent: #3ea0ff;
+    --accent-600: #2f8ae6;
+    --ring: 0 0 0 4px rgba(62,160,255,0.14);
+    --shadow-sm: 0 1px 2px rgba(2,6,23,0.6);
+    --shadow-md: 0 6px 18px rgba(2,6,23,0.6);
+  }
+
+  .wrapper {
+    color: #e6eef8;
+  }
+
+  .card {
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .desc {
+    color: var(--muted);
+  }
+}
+
+/* Focus visibility for keyboard users */
+:focus {
+  outline: none;
+}
+
+a:focus,
+button:focus {
+  outline: none;
+  box-shadow: var(--ring);
+}

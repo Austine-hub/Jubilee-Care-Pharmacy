@@ -1,0 +1,165 @@
+/* ======================================================
+   File: Hero.module.css
+   - Clean, responsive, accessible styling
+   - No Tailwind. CSS Modules only.
+   - Scales from mobile → large screens
+   ====================================================== */
+
+:root {
+  --hero-height-mobile: 320px;
+  --hero-height-desktop: 560px;
+  --overlay-gradient: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.6) 100%);
+  --accent: #f97316; /* pharmacy warm accent */
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.inner {
+  position: relative;
+  width: 100%;
+  height: var(--hero-height-mobile);
+}
+
+.slide {
+  position: absolute;
+  inset: 0 0 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+
+/* -------------------- Overlay -------------------- */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--overlay-gradient);
+  backdrop-filter: blur(4px); /* ✅ reduced blur for image clarity */
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 2rem;
+}
+
+.textWrap {
+  max-width: 680px;
+  color: #fff;
+  margin-left: 1rem;
+}
+
+.headline {
+  font-size: 1.5rem;
+  line-height: 1.05;
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+  color: #fff;
+}
+
+.subheadline {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+  opacity: 0.95;
+  color: #8f8686;
+}
+
+.cta {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(249,115,22,0.18);
+}
+
+.nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-10%);
+  background: rgba(3, 90, 22, 0.85);
+  position: absolute;
+  top: 50%;
+
+  border: none;
+
+
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.nav.left { left: 12px; }
+.nav.right { right: 12px; }
+
+.nav:focus {
+  outline: 3px solid rgba(15,23,42,0.12);
+}
+
+.indicators {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.indicator {
+  width: 10px;
+  height: 10px;
+  background: rgba(255,255,255,0.6);
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+}
+
+.indicator:focus {
+  outline: 2px solid rgba(255,255,255,0.95);
+}
+
+.indicator.active {
+  transform: scale(1.3);
+  background: var(--accent);
+}
+
+/* Larger screens */
+@media (min-width: 768px) {
+  .inner { height: calc(var(--hero-height-desktop)); }
+  .headline { font-size: 2.25rem; }
+  .subheadline { font-size: 1.125rem; }
+  .textWrap { margin-left: 3rem; }
+}
+
+/* Very large screens: left content alignment */
+@media (min-width: 1200px) {
+  .textWrap { margin-left: 6rem; }
+}
+
+/* Accessibility: prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .image { transition: none; }
+  .slide { transition: none; }
+}
+
+/* Small touch targets on tiny screens */
+@media (max-width: 420px) {
+  .nav { width: 40px; height: 40px; }
+  .headline { font-size: 1.25rem; }
+}
