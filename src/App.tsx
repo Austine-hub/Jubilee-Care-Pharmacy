@@ -139,7 +139,7 @@ function App() {
           <Route path="condition/diabetes" element={<DM/>} />
           <Route path="/condition/cvs" element={<CVS/>} />
           <Route path="condition/women" element={<WomenHealthShop />} />
-          <Route path="condition/omen" element={<MensHealth />} />
+          <Route path="condition/men" element={<MensHealth />} />
 
           {/* ---------- OTHER SERVICES ---------- */}
           <Route path="services" element={<div>Other Services Overview</div>} />
