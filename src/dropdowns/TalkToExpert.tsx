@@ -5,8 +5,38 @@ import { FaPhoneAlt, FaVideo, FaEnvelope, FaWhatsapp } from "react-icons/fa";
 const TalkToExpert: React.FC = () => {
   const [selectedMode, setSelectedMode] = useState<string | null>(null);
 
+  // ✅ Contact details
+  const phoneNumber = "0796787207";
+  const whatsappNumber = "0796787207";
+  const emailAddress = "ajanjaaustine@gmail.com";
+  const videoCallLink = "https://meet.google.com/"; // Replace with your actual video call link
+
+  // ✅ Handle user click
   const handleSelect = (mode: string) => {
     setSelectedMode(mode);
+  };
+
+  // ✅ Handle "Start" button click based on selected mode
+  const handleStartSession = () => {
+    if (!selectedMode) return;
+
+    switch (selectedMode) {
+      case "call":
+        window.location.href = `tel:${phoneNumber}`;
+        break;
+      case "whatsapp":
+        // WhatsApp URL format (auto-detects mobile or desktop)
+        window.open(`https://wa.me/254${whatsappNumber.substring(1)}`, "_blank");
+        break;
+      case "email":
+        window.location.href = `mailto:${emailAddress}?subject=Pharmacy Consultation&body=Hello, I’d like to consult about...`;
+        break;
+      case "video":
+        window.open(videoCallLink, "_blank");
+        break;
+      default:
+        break;
+    }
   };
 
   return (
@@ -66,9 +96,15 @@ const TalkToExpert: React.FC = () => {
         </div>
 
         <div className={styles.ctaContainer}>
-          <button className={styles.ctaButton}>
+          <button
+            className={styles.ctaButton}
+            onClick={handleStartSession}
+            disabled={!selectedMode}
+          >
             {selectedMode
-              ? `Start ${selectedMode.charAt(0).toUpperCase() + selectedMode.slice(1)} Session`
+              ? `Start ${
+                  selectedMode.charAt(0).toUpperCase() + selectedMode.slice(1)
+                } Session`
               : "Start Consultation"}
           </button>
         </div>

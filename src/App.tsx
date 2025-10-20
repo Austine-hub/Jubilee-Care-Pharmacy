@@ -136,10 +136,10 @@ function App() {
 
           {/* ---------- SHOP BY CONDITION ---------- */}
           <Route path="condition" element={<div>Shop by Condition Overview</div>} />
-          <Route path="clinical/inpatient" element={<DM/>} />
+          <Route path="condition/diabetes" element={<DM/>} />
           <Route path="/condition/cvs" element={<CVS/>} />
-          <Route path="clinical/emergency" element={<WomenHealthShop />} />
-          <Route path="clinical/surgery" element={<MensHealth />} />
+          <Route path="condition/women" element={<WomenHealthShop />} />
+          <Route path="condition/omen" element={<MensHealth />} />
 
           {/* ---------- OTHER SERVICES ---------- */}
           <Route path="services" element={<div>Other Services Overview</div>} />
