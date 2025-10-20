@@ -1,14 +1,18 @@
 /* ======================================================
    File: Hero.module.css
-   - Clean, responsive, accessible styling
-   - No Tailwind. CSS Modules only.
-   - Scales from mobile → large screens
+   - Optimized for clearer hero images
+   - Improved overlay transparency & gradient balance
    ====================================================== */
 
 :root {
   --hero-height-mobile: 320px;
   --hero-height-desktop: 560px;
-  --overlay-gradient: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.6) 100%);
+  --overlay-gradient: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.18) 0%,      /* lighter top tint */
+    rgba(0, 0, 0, 0.28) 50%,     /* subtle mid overlay */
+    rgba(0, 0, 0, 0.35) 100%     /* slight base shadow */
+  );
   --accent: #f97316; /* pharmacy warm accent */
 }
 
@@ -26,7 +30,7 @@
 
 .slide {
   position: absolute;
-  inset: 0 0 0 0;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -37,17 +41,17 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.6s ease;
+  transition: transform 0.6s ease, filter 0.5s ease;
+  filter: brightness(1.08) contrast(1.05) saturate(1.1); /* ✅ clearer & more vivid */
 }
-
 
 /* -------------------- Overlay -------------------- */
 .overlay {
   position: absolute;
   inset: 0;
   background: var(--overlay-gradient);
-  backdrop-filter: blur(4px); /* ✅ reduced blur for image clarity */
-  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(2px); /* ✅ reduced blur for clarity */
+  -webkit-backdrop-filter: blur(2px);
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -58,6 +62,7 @@
   max-width: 680px;
   color: #fff;
   margin-left: 1rem;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35); /* ✅ helps text stay readable without dark overlay */
 }
 
 .headline {
@@ -71,8 +76,8 @@
 .subheadline {
   margin: 0 0 1rem 0;
   font-size: 1rem;
-  opacity: 0.95;
-  color: #8f8686;
+  opacity: 0.92;
+  color: #f0f0f0; /* ✅ brighter than #8f8686 for improved readability */
 }
 
 .cta {
@@ -83,30 +88,39 @@
   border-radius: 8px;
   text-decoration: none;
   font-weight: 600;
-  box-shadow: 0 6px 18px rgba(249,115,22,0.18);
+  box-shadow: 0 6px 18px rgba(249, 115, 22, 0.18);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(249, 115, 22, 0.25);
 }
 
 .nav {
   position: absolute;
   top: 50%;
-  transform: translateY(-10%);
+  transform: translateY(-20%);
   background: rgba(3, 90, 22, 0.85);
-  position: absolute;
-  top: 50%;
-
   border: none;
-
-
   display: grid;
   place-items: center;
   cursor: pointer;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  transition: background 0.25s ease;
+}
+
+.nav:hover {
+  background: rgba(3, 90, 22, 0.95);
 }
 
 .nav.left { left: 12px; }
 .nav.right { right: 12px; }
 
 .nav:focus {
-  outline: 3px solid rgba(15,23,42,0.12);
+  outline: 3px solid rgba(15, 23, 42, 0.12);
 }
 
 .indicators {
@@ -124,14 +138,15 @@
 .indicator {
   width: 10px;
   height: 10px;
-  background: rgba(255,255,255,0.6);
+  background: rgba(255, 255, 255, 0.6);
   border-radius: 999px;
   border: none;
   cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .indicator:focus {
-  outline: 2px solid rgba(255,255,255,0.95);
+  outline: 2px solid rgba(255, 255, 255, 0.95);
 }
 
 .indicator.active {
@@ -141,7 +156,7 @@
 
 /* Larger screens */
 @media (min-width: 768px) {
-  .inner { height: calc(var(--hero-height-desktop)); }
+  .inner { height: var(--hero-height-desktop); }
   .headline { font-size: 2.25rem; }
   .subheadline { font-size: 1.125rem; }
   .textWrap { margin-left: 3rem; }
@@ -160,6 +175,6 @@
 
 /* Small touch targets on tiny screens */
 @media (max-width: 420px) {
-  .nav { width: 40px; height: 40px; }
+  .nav { width: 38px; height: 38px; }
   .headline { font-size: 1.25rem; }
 }
