@@ -1,20 +1,29 @@
-// ===============================================================
-// OUR TEAM — Accessible, Scalable, Mobile-Optimized (2025)
-// ===============================================================
+
+
+
+// ============================================================================
+// Modern Responsive "Our Team" Section (Pharmacy Website)
+// - Uses Framer Motion for entry animations
+// - Accessible, Mobile-first, and Scalable
+// - Harmonized with clsx & react-intersection-observer
+// ============================================================================
 
 import { memo } from "react";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import clsx from "clsx";
 import styles from "./OurTeam.module.css";
 
-// ===============================================================
-// ✅ Local Images (Fallback Demo Data)
-// ===============================================================
+// ---------------------------------------------------------------------------
+// ✅ Local Images (Demo Data Fallback)
+// ---------------------------------------------------------------------------
 import pic1 from "../assets/team/Pharmacist.png";
 import pic2 from "../assets/team/Pharmacologist.png";
 import pic3 from "../assets/team/Technician.png";
 
-// ===============================================================
+// ---------------------------------------------------------------------------
 // ✅ Type Definitions
-// ===============================================================
+// ---------------------------------------------------------------------------
 export interface TeamMember {
   id: string;
   name: string;
@@ -27,15 +36,13 @@ export interface TeamMember {
 }
 
 interface Props {
-  /** Optional external data source (e.g., fetched from backend) */
   members?: TeamMember[];
-  /** Grid column count (1–4 recommended) */
   columns?: number;
 }
 
-// ===============================================================
-// ✅ Default Demo Data (used when no props.members passed)
-// ===============================================================
+// ---------------------------------------------------------------------------
+// ✅ Default Demo Data (Fallback)
+// ---------------------------------------------------------------------------
 const defaultMembers: TeamMember[] = [
   {
     id: "1",
@@ -66,34 +73,75 @@ const defaultMembers: TeamMember[] = [
   },
 ];
 
-// ===============================================================
+// ---------------------------------------------------------------------------
+// ✅ Framer Motion Variants
+// ---------------------------------------------------------------------------
+const fadeInUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      delay: i * 0.15,
+      ease: [0.25, 0.1, 0.25, 1] as any, // ✅ fix type mismatch
+    },
+  }),
+};
+
+
+// ---------------------------------------------------------------------------
 // ✅ Component — Responsive, Semantic, ARIA-Compliant
-// ===============================================================
+// ---------------------------------------------------------------------------
 function OurTeam({ members = defaultMembers, columns = 3 }: Props) {
-  // Clamp grid columns safely between 1–4
   const cols = Math.min(Math.max(columns, 1), 4);
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 });
 
   return (
-    <section className={styles.section} aria-labelledby="our-team-heading">
-      {/* Header */}
+    <section
+      ref={ref}
+      className={styles.section}
+      aria-labelledby="our-team-heading"
+    >
+      {/* === Header === */}
       <header className={styles.header}>
-        <h2 id="our-team-heading" className={styles.title}>
+        <motion.h2
+          id="our-team-heading"
+          className={styles.title}
+          initial={{ opacity: 0, y: -10 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           Meet Our Team
-        </h2>
-        <p className={styles.subtitle}>
+        </motion.h2>
+
+        <motion.p
+          className={styles.subtitle}
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ delay: 0.3, duration: 0.5 }}
+        >
           Experienced pharmacy and clinical staff committed to safe, patient-centred care.
-        </p>
+        </motion.p>
       </header>
 
-      {/* Team Members Grid */}
+      {/* === Team Grid === */}
       <ul
         className={styles.grid}
         style={{ ["--cols" as any]: cols }}
         role="list"
       >
-        {members.map((member) => (
-          <li className={styles.card} key={member.id}>
-            {/* === Image === */}
+        {members.map((member, i) => (
+          <motion.li
+            key={member.id}
+            className={clsx(styles.card)}
+            custom={i}
+            initial="hidden"
+            animate={inView ? "visible" : "hidden"}
+            variants={fadeInUp}
+            role="group"
+            aria-label={`${member.name}, ${member.role}`}
+          >
             <div className={styles.media}>
               <img
                 src={member.imageSrc ?? "https://via.placeholder.com/320x320?text=Photo"}
@@ -106,7 +154,6 @@ function OurTeam({ members = defaultMembers, columns = 3 }: Props) {
               />
             </div>
 
-            {/* === Text Content === */}
             <div className={styles.content}>
               <div className={styles.meta}>
                 <h3 className={styles.name}>{member.name}</h3>
@@ -118,13 +165,12 @@ function OurTeam({ members = defaultMembers, columns = 3 }: Props) {
 
               {member.bio && <p className={styles.bio}>{member.bio}</p>}
 
-              {/* === Contact Info === */}
               {(member.email || member.phone) && (
                 <div className={styles.contact}>
                   {member.email && (
                     <a
-                      className={styles.contactLink}
                       href={`mailto:${member.email}`}
+                      className={styles.contactLink}
                       aria-label={`Email ${member.name}`}
                     >
                       {member.email}
@@ -132,8 +178,8 @@ function OurTeam({ members = defaultMembers, columns = 3 }: Props) {
                   )}
                   {member.phone && (
                     <a
-                      className={styles.contactLink}
                       href={`tel:${member.phone}`}
+                      className={styles.contactLink}
                       aria-label={`Call ${member.name}`}
                     >
                       {member.phone}
@@ -142,12 +188,17 @@ function OurTeam({ members = defaultMembers, columns = 3 }: Props) {
                 </div>
               )}
             </div>
-          </li>
+          </motion.li>
         ))}
       </ul>
 
-      {/* CTA Row */}
-      <div className={styles.ctaRow}>
+      {/* === CTA Button === */}
+      <motion.div
+        className={styles.ctaRow}
+        initial={{ opacity: 0, y: 20 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ delay: 0.4, duration: 0.5 }}
+      >
         <button
           type="button"
           className={styles.cta}
@@ -155,15 +206,9 @@ function OurTeam({ members = defaultMembers, columns = 3 }: Props) {
         >
           View All Staff
         </button>
-      </div>
+      </motion.div>
     </section>
   );
 }
 
-// ===============================================================
-// ✅ Export (Memoized for Performance)
-// ===============================================================
 export default memo(OurTeam);
-
-
-
