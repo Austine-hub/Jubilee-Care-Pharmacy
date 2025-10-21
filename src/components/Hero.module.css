@@ -153,7 +153,6 @@
 .indicator {
   width: 1.5px;
   height: 1.2px;
-  border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.45);
   border: none;
   cursor: pointer;
