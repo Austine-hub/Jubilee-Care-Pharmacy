@@ -123,44 +123,78 @@
   outline: 3px solid rgba(15, 23, 42, 0.12);
 }
 
+/* ============================================================================
+   MODERN SLIDER INDICATORS (Optimized for clarity & UX)
+   - Smaller dots with better spacing and touch targets
+   - Smooth transitions, soft shadows for visibility
+   - Works beautifully on both dark and light backgrounds
+   ============================================================================ */
+
+/* ============================================================================
+   ULTRA-MINIMAL SLIDER INDICATORS
+   - Extremely small, elegant dots
+   - Subtle glow on hover/active for clarity
+   - Perfect for clean modern pharmacy / healthcare UIs
+   ============================================================================ */
+
 .indicators {
   position: absolute;
-  bottom: 12px;
+  bottom: 14px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 8px;
+  gap: 4px;
   list-style: none;
   padding: 0;
   margin: 0;
+  z-index: 10;
 }
 
 .indicator {
-  width: 10px;
-  height: 10px;
-  background: rgba(255, 255, 255, 0.6);
-  border-radius: 999px;
+  width: 1.5px;
+  height: 1.2px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.45);
   border: none;
   cursor: pointer;
-  transition: transform 0.2s ease, background 0.2s ease;
+  transition: all 0.25s ease;
 }
 
-.indicator:focus {
-  outline: 2px solid rgba(255, 255, 255, 0.95);
+.indicator:hover {
+  background-color: rgba(255, 255, 255, 0.75);
+  transform: scale(1.2);
+}
+
+.indicator:focus-visible {
+  outline: 1px solid var(--accent, #0077b6);
+  outline-offset: 2px;
 }
 
 .indicator.active {
+  background-color: var(--accent, #0077b6);
   transform: scale(1.3);
-  background: var(--accent);
+  box-shadow: 0 0 3px rgba(0, 119, 182, 0.5);
 }
 
-/* Larger screens */
-@media (min-width: 768px) {
-  .inner { height: var(--hero-height-desktop); }
-  .headline { font-size: 2.25rem; }
-  .subheadline { font-size: 1.125rem; }
-  .textWrap { margin-left: 3rem; }
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+  .indicators {
+    gap: 3px;
+    bottom: 10px;
+  }
+
+  .indicator {
+    width: 1.8px;
+    height: 1.2px;
+  }
+
+  .indicator.active {
+    transform: scale(1.2);
+  }
 }
+
+
+
 
 /* Very large screens: left content alignment */
 @media (min-width: 1200px) {

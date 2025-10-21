@@ -244,18 +244,19 @@ export default function Hero({ slides = DEFAULT_SLIDES }: { slides?: Slide[] }) 
         </button>
 
         {/* ===== Indicators ===== */}
-        <ol className={styles.indicators} role="tablist" aria-label="Slide indicators">
-          {slides.map((_, i) => (
-            <li key={i} className={styles.indicatorItem}>
-              <button
-                onClick={() => goTo(i)}
-                aria-label={`Go to slide ${i + 1}`}
-                aria-pressed={i === index}
-                className={`${styles.indicator} ${i === index ? styles.active : ""}`}
-              />
-            </li>
-          ))}
-        </ol>
+              <ol className={styles.indicators} role="tablist" aria-label="Slide indicators">
+                {slides.map((_, i) => (
+                  <li key={i} className={styles.indicatorItem}>
+                    <button
+                      onClick={() => goTo(i)}
+                      aria-label={`Go to slide ${i + 1}`}
+                      aria-pressed={i === index}
+                      className={`${styles.indicator} ${i === index ? styles.active : ""}`}
+                    />
+                  </li>
+                ))}
+              </ol>
+
       </div>
     </section>
   );
