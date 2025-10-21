@@ -100,27 +100,27 @@
 .nav {
   position: absolute;
   top: 50%;
-  transform: translateY(-20%);
-  background: rgba(3, 90, 22, 0.85);
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.4);
   border: none;
-  display: grid;
-  place-items: center;
+  color: #fff;
+  padding: 0.7rem;
+  border-radius: 80%;
   cursor: pointer;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  transition: background 0.25s ease;
+  z-index: 4;
+  transition: background 0.3s ease, transform 0.3s ease;
 }
 
 .nav:hover {
-  background: rgba(3, 90, 22, 0.95);
+    background: rgba(0, 0, 0, 0.7);
+  transform: translateY(-50%) scale(1.1);;
 }
 
-.nav.left { left: 12px; }
-.nav.right { right: 12px; }
+.nav.left { left: 2px; }
+.nav.right { right: 2px; }
 
 .nav:focus {
-  outline: 3px solid rgba(15, 23, 42, 0.12);
+  outline: 0.4px solid rgba(15, 23, 42, 0.12);
 }
 
 /* ============================================================================
@@ -208,6 +208,6 @@
 
 /* Small touch targets on tiny screens */
 @media (max-width: 420px) {
-  .nav { width: 38px; height: 38px; }
+  .nav { width: 18px; height: 15px; }
   .headline { font-size: 1.25rem; }
 }
